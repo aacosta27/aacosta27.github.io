@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bathroom Pass Project</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .container {
+      max-width: 400px;
+      margin: 60px auto;
+      background: #1f2330;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    input {
+      background: #2a2f3d;
+      color: white;
+    }
+
+    button {
+      background-color: #00f2fe;
+      color: #0f1117;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0fd9e0;
+    }
+
+    #output {
+      margin-top: 20px;
+      background: #282c3f;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-line;
+      font-weight: 500;
+      color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="projects.html">Cookout Project</a></li>
+        <li><a href="projects2.html">Ice Cream Project</a></li>
+        <li><a href="projects3.html">Bathroom Pass Project</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>🚻 School Bathroom Pass</h2>
+      <input type="text" id="studentName" placeholder="Enter your name" />
+      <button onclick="createPass()">Create Pass</button>
+      <button onclick="checkPass()">Check Pass Status</button>
+      <button onclick="returnPass()">Return Pass</button>
+      <div id="output"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Alex Acosta</p>
+  </footer>
+
+  <script>
+    let bathroomPass = {
+      inUse: false,
+      studentName: "",
+      timeOut: ""
+    };
+
+    function createPass() {
+      if (bathroomPass.inUse) {
+        document.getElementById("output").textContent =
+          `❌ Pass is currently in use by ${bathroomPass.studentName} at ${bathroomPass.timeOut}.`;
+      } else {
+        const nameInput = document.getElementById("studentName").value.trim();
+        if (nameInput === "") {
+          document.getElementById("output").textContent = "❌ Please enter a name.";
+          return;
+        }
+        const now = new Date();
+        const timeNow = now.getHours().toString().padStart(2, '0') + ":" +
+                        now.getMinutes().toString().padStart(2, '0');
+        bathroomPass.inUse = true;
+        bathroomPass.studentName = nameInput;
+        bathroomPass.timeOut = timeNow;
+        document.getElementById("output").textContent = `✅ Pass granted to ${nameInput} at ${timeNow}.`;
+        document.getElementById("studentName").value = "";
+      }
+    }
+
+    function checkPass() {
+      if (bathroomPass.inUse) {
+        document.getElementById("output").textContent =
+          `📋 Pass is currently with: ${bathroomPass.studentName}\n⏰ Time out: ${bathroomPass.timeOut}`;
+      } else {
+        document.getElementById("output").textContent = "✅ Pass is currently available.";
+      }
+    }
+
+    function returnPass() {
+      if (!bathroomPass.inUse) {
+        document.getElementById("output").textContent = "❌ No one is currently using the pass.";
+      } else {
+        document.getElementById("output").textContent =
+          `✅ ${bathroomPass.studentName} has returned the pass.`;
+        bathroomPass.inUse = false;
+        bathroomPass.studentName = "";
+        bathroomPass.timeOut = "";
+      }
+    }
+  </script>
+
+</body>
+</html>

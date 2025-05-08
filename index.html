@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alex's Portfolio</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .hero {
+      background: url('assets/img/tech-banner.jpg') center/cover no-repeat;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
 
+    .hero h1 {
+      font-size: 3rem;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #cccccc;
+      max-width: 700px;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero .cta-button {
+      margin-top: 30px;
+      padding: 14px 30px;
+      font-size: 1rem;
+      background: #00f2fe;
+      color: #0f1117;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .hero {
+  position: relative;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('assets/images/bgwebsite.jpg') center/cover no-repeat;
+  opacity: 0;
+  animation: fadeInBg 2s ease forwards;
+  z-index: -1;
+}
+
+@keyframes fadeInBg {
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes fadeInBg {
+  to {
+    opacity: 1;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="projects.html">Cookout Project</a></li>
+        <li><a href="projects2.html">Ice Cream Project</a></li>
+        <li><a href="projects3.html">Bathroom Pass Project</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Hi, I'm Alex</h1>
+    <p>I'm a student passionate about building cool things with code — from interactive web tools to creative problem solvers.</p>
+    <a href="projects.html">
+      <button class="cta-button">View My Projects</button>
+    </a>
+  </section>
+
+  <footer>
+    <p>© 2025 Alex Acosta • Computer Science & Web Development Enthusiast</p>
+  </footer>
+
+</body>
+</html>

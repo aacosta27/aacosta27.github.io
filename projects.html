@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookout Project</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #1f2330;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
+    }
+
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    select {
+      background: #2a2f3d;
+      color: white;
+    }
+
+    button {
+      background: #00f2fe;
+      color: #0f1117;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0fd9e0;
+    }
+
+    #orderOutput {
+      margin-top: 20px;
+      background: #282c3f;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="projects.html">Cookout Project</a></li>
+        <li><a href="projects2.html">Ice Cream Project</a></li>
+        <li><a href="projects3.html">Bathroom Pass Project</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>🍔 Cookout Order</h2>
+
+      <select id="itemChoice">
+        <option value="">Choose Tray or Burger</option>
+        <option value="tray">Tray</option>
+        <option value="burger">Burger</option>
+      </select>
+
+      <div id="trayOptions" style="display:none;">
+        <select id="trayType">
+          <option value="">Select Tray</option>
+          <option>Hamburger Tray</option>
+          <option>Barbecue Tray</option>
+          <option>Hotdogs Tray</option>
+          <option>Big Double Burger Tray</option>
+          <option>Quesadilla Tray (Chicken or Beef)</option>
+          <option>Chicken Tray</option>
+          <option>Cajun Chicken Tray</option>
+          <option>Spicy Chicken Tray</option>
+          <option>BBQ Char-Grilled Chicken Tray</option>
+          <option>Chicken Strips Tray</option>
+        </select>
+
+        <select id="side1">
+          <option value="">Select First Side</option>
+          <option>Chicken Nuggets</option>
+          <option>Corn Dog</option>
+          <option>Hush Puppies</option>
+          <option>Fries</option>
+          <option>Onion Rings</option>
+          <option>Slaw</option>
+          <option>Chili</option>
+          <option>White Cheddar Bites</option>
+          <option>Bacon Wrap</option>
+          <option>Chicken Wrap</option>
+        </select>
+
+        <select id="side2">
+          <option value="">Select Second Side</option>
+          <option>Chicken Nuggets</option>
+          <option>Corn Dog</option>
+          <option>Hush Puppies</option>
+          <option>Fries</option>
+          <option>Onion Rings</option>
+          <option>Slaw</option>
+          <option>Chili</option>
+          <option>White Cheddar Bites</option>
+          <option>Bacon Wrap</option>
+          <option>Chicken Wrap</option>
+        </select>
+      </div>
+
+      <div id="burgerOptions" style="display:none;">
+        <select id="burgerType">
+          <option value="">Select Burger</option>
+          <option>Big Double Hamburger</option>
+          <option>Cookout Style</option>
+          <option>Outwest Style</option>
+          <option>Cheddar Style</option>
+          <option>Steak Style</option>
+        </select>
+      </div>
+
+      <select id="drinkChoice">
+        <option value="">Would you like a drink?</option>
+        <option value="none">No Drink</option>
+        <option value="small">Small ($1.00)</option>
+        <option value="medium">Medium ($1.79)</option>
+        <option value="large">Large ($1.99)</option>
+      </select>
+
+      <button onclick="placeOrder()">Place Order</button>
+
+      <div id="orderOutput"></div>
+    </div>
+  </main>
+
+  <footer><p>© 2025 Alex Acosta</p></footer>
+
+  <script>
+    let total = 0;
+
+    document.getElementById("itemChoice").addEventListener("change", function () {
+      const item = this.value;
+      document.getElementById("trayOptions").style.display = item === "tray" ? "block" : "none";
+      document.getElementById("burgerOptions").style.display = item === "burger" ? "block" : "none";
+    });
+
+    function placeOrder() {
+      total = 0;
+      let output = "";
+      const item = document.getElementById("itemChoice").value;
+
+      if (item === "tray") {
+        const tray = document.getElementById("trayType").value;
+        const side1 = document.getElementById("side1").value;
+        const side2 = document.getElementById("side2").value;
+        if (!tray || !side1 || !side2) return alert("Please complete all tray and side selections.");
+        output += `Tray: ${tray}\nSides: ${side1}, ${side2}\n`;
+        total += 4.99;
+      }
+
+      if (item === "burger") {
+        const burger = document.getElementById("burgerType").value;
+        if (!burger) return alert("Please select a burger.");
+        output += `Burger: ${burger}\n`;
+        total += 3.99;
+      }
+
+      const drink = document.getElementById("drinkChoice").value;
+      if (drink && drink !== "none") {
+        output += `Drink: ${drink}\n`;
+        if (drink === "small") total += 1;
+        if (drink === "medium") total += 1.79;
+        if (drink === "large") total += 1.99;
+        total -= 1; // discount
+      }
+
+      output += `Total: $${total.toFixed(2)}`;
+      document.getElementById("orderOutput").textContent = output;
+    }
+  </script>
+
+</body>
+</html>

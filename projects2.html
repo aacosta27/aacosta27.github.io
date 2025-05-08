@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ice Cream Project</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #1f2330;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    select, input {
+      background: #2a2f3d;
+      color: white;
+    }
+
+    button {
+      background: #00f2fe;
+      color: #0f1117;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0fd9e0;
+    }
+
+    .output {
+      margin-top: 20px;
+      background: #282c3f;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-line;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 1rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="projects.html">Cookout Project</a></li>
+        <li><a href="projects2.html">Ice Cream Project</a></li>
+        <li><a href="projects3.html">Bathroom Pass Project</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>🍦 Ice Cream Flavor Voting</h2>
+
+      <select id="FlavorPicker"></select>
+      <p id="ChosenFlavorOutput">You picked: </p>
+
+      <button onclick="confirmVote()">Vote for this Flavor</button>
+
+      <hr />
+
+      <input type="text" id="FlavorInput" placeholder="Add or edit a flavor" />
+      <button onclick="addFlavor()">Add Flavor</button>
+      <button onclick="spellingUpdate()">Change Spelling</button>
+      <p id="FavoriteLabel"></p>
+
+      <hr />
+
+      <button onclick="combineLists()">Show Flavors & Votes</button>
+      <ul id="ListView"></ul>
+
+      <button onclick="findTotalVotes()">Total Votes</button>
+      <p id="AccumulatorOutput"></p>
+
+      <button onclick="findWinner()">Find Winner</button>
+      <p id="TopOutput"></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Alex Acosta</p>
+  </footer>
+
+  <script>
+    let FlavorList = ['COOKIES AND CREAM'];
+    let VoteList = [0];
+
+    function updateFlavorPicker() {
+      const picker = document.getElementById('FlavorPicker');
+      picker.innerHTML = '';
+      FlavorList.forEach((flavor, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = flavor;
+        picker.appendChild(option);
+      });
+    }
+
+    function addFlavor() {
+      const input = document.getElementById('FlavorInput').value.trim().toUpperCase();
+      const label = document.getElementById('FavoriteLabel');
+
+      if (FlavorList.includes(input)) {
+        label.textContent = 'The flavor is already in the list. Try another one.';
+      } else if (input === '') {
+        label.textContent = 'Please input a flavor.';
+      } else if (!isNaN(input)) {
+        label.textContent = 'No numbers allowed.';
+      } else {
+        FlavorList.push(input);
+        VoteList.push(0);
+        label.textContent = input + ' has been added.';
+        document.getElementById('FlavorInput').value = '';
+        updateFlavorPicker();
+      }
+    }
+
+    document.getElementById('FlavorPicker').addEventListener('change', () => {
+      const picker = document.getElementById('FlavorPicker');
+      const selectedFlavor = FlavorList[picker.value];
+      document.getElementById('ChosenFlavorOutput').textContent = 'You picked: ' + selectedFlavor;
+    });
+
+    function confirmVote() {
+      const picker = document.getElementById('FlavorPicker');
+      const selectedIndex = picker.value;
+
+      if (selectedIndex === '') {
+        alert('Pick a flavor before trying to vote.');
+        return;
+      }
+
+      VoteList[selectedIndex]++;
+      alert(`Thanks for voting for ${FlavorList[selectedIndex]}! It now has ${VoteList[selectedIndex]} votes.`);
+    }
+
+    function combineLists() {
+      const listView = document.getElementById('ListView');
+      listView.innerHTML = '';
+      FlavorList.forEach((flavor, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${flavor} - ${VoteList[index]} votes`;
+        listView.appendChild(li);
+      });
+    }
+
+    function spellingUpdate() {
+      const picker = document.getElementById('FlavorPicker');
+      const selectedIndex = picker.value;
+      const newFlavor = document.getElementById('FlavorInput').value.trim().toUpperCase();
+
+      if (selectedIndex === '') {
+        alert('Pick a flavor to edit its spelling.');
+        return;
+      }
+
+      if (newFlavor === '') {
+        alert('Please enter a new flavor name.');
+        return;
+      }
+
+      if (FlavorList.includes(newFlavor)) {
+        alert('That flavor already exists.');
+        return;
+      }
+
+      const confirmChange = confirm(`Do you want to change "${FlavorList[selectedIndex]}" to "${newFlavor}"?`);
+      if (confirmChange) {
+        FlavorList[selectedIndex] = newFlavor;
+        document.getElementById('FlavorInput').value = '';
+        updateFlavorPicker();
+        combineLists();
+        alert('Flavor updated!');
+      }
+    }
+
+    function findTotalVotes() {
+      const total = VoteList.reduce((acc, val) => acc + val, 0);
+      document.getElementById('AccumulatorOutput').textContent = `Total number of votes: ${total}`;
+    }
+
+    function findWinner() {
+      let top = 0;
+      let index = 0;
+      for (let i = 0; i < VoteList.length; i++) {
+        if (VoteList[i] > top) {
+          top = VoteList[i];
+          index = i;
+        }
+      }
+      document.getElementById('TopOutput').textContent =
+        `${top} votes for winning flavor: ${FlavorList[index]}`;
+    }
+
+    updateFlavorPicker();
+  </script>
+
+</body>
+</html>

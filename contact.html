@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .contact-hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .contact-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('assets/images/bgwebsite.jpg') center/cover no-repeat;
+      opacity: 0;
+      animation: fadeInBg 2s ease forwards;
+      z-index: -1;
+    }
+
+    @keyframes fadeInBg {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .contact-box {
+      background: rgba(31, 35, 48, 0.95);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .contact-box h2 {
+      color: #00f2fe;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .contact-box input,
+    .contact-box textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2a2f3d;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .contact-box button {
+      background-color: #00f2fe;
+      color: #0f1117;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .contact-box button:hover {
+      background-color: #0fd9e0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="projects.html">Cookout Project</a></li>
+        <li><a href="projects2.html">Ice Cream Project</a></li>
+        <li><a href="projects3.html">Bathroom Pass Project</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="contact-hero">
+    <form class="contact-box" action="mailto:aacosta27@belenwolverines.org" method="POST" enctype="text/plain">
+      <h2>Send Me a Message</h2>
+
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required />
+
+      <label for="email">Your Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+      <label for="message">Your Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Alex Acosta</p>
+  </footer>
+
+</body>
+</html>
